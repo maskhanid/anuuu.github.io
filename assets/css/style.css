@@ -7,6 +7,7 @@ body{
   background:linear-gradient(180deg,#020617 0%,#03132a 100%);
   color:#e6f0ff;
   -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%; /* important to avoid text size changes */
 }
 .app{width:100%;max-width:520px;margin:18px auto;background:linear-gradient(180deg, rgba(6,20,38,0.95), rgba(4,20,36,0.98));border-radius:16px;padding:18px;box-shadow:0 12px 40px rgba(2,6,23,0.6);max-height:calc(100vh - 36px);overflow:auto;-webkit-overflow-scrolling:touch;}
 .muted{color:var(--muted)}
@@ -22,7 +23,19 @@ input, select, button { box-sizing: border-box; -webkit-tap-highlight-color: tra
 .fade-in { animation: fadeIn .28s ease both; }
 @keyframes fadeIn { from { opacity:0; transform: translateY(6px)} to { opacity:1; transform:none } }
 .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
-.input-number { background: linear-gradient(180deg, rgba(6,32,52,0.35), rgba(4,24,40,0.25)); border:1px solid rgba(255,255,255,0.03); padding:10px; border-radius:10px; color: #e6f0ff; width:100%; }
+
+/* IMPORTANT: set large font-size for inputs/selects on mobile to avoid browser auto-zoom */
+.input-number {
+  background: linear-gradient(180deg, rgba(6,32,52,0.35), rgba(4,24,40,0.25));
+  border:1px solid rgba(255,255,255,0.03);
+  padding:10px;
+  border-radius:10px;
+  color: #e6f0ff;
+  width:100%;
+  font-size:16px; /* prevent zoom on mobile */
+  -webkit-font-smoothing:antialiased;
+}
+
 .copy-icon { background:transparent; border:none; padding:8px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
 .copy-icon svg { width:18px; height:18px; color:#9fb4d6; transition: transform 180ms ease, opacity 180ms ease; }
 .copy-icon.success svg { transform: scale(1.15); opacity:0; }
@@ -50,11 +63,7 @@ input, select, button { box-sizing: border-box; -webkit-tap-highlight-color: tra
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-#historyContent {
-  max-width:900px;
-  margin:18px auto;
-  padding:18px;
-}
+#historyContent { max-width:900px; margin:18px auto; padding:18px; }
 .history-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
 .history-item { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:10px; margin-bottom:10px; }
 .muted-xs { color:rgba(200,220,255,0.75); font-size:12px; }
@@ -64,6 +73,7 @@ input, select, button { box-sizing: border-box; -webkit-tap-highlight-color: tra
   .app{ padding:14px }
   .result-value{ font-size:1.2rem }
   .btn-primary{ font-size:15px }
-  /* buat chainWrap fleksibel di mobile */
-  #chainWrap { width: 48%; min-width:160px; }
+  /* Force exchange + network to stack and be full width on small screens */
+  #chainWrap { width:100% }
+  .grid { gap:10px; }
 }
