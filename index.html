@@ -2,10 +2,13 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <!-- Prevent mobile auto-zoom / scaling -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
   <title>MasKhan Convert — Pro</title>
+
   <script src="https://cdn.tailwindcss.com" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
@@ -36,8 +39,9 @@
 
       <!-- CRYPTO -->
       <div id="cryptoSection" class="card space-y-3">
-        <div class="flex justify-between items-center">
-          <div style="flex:1;">
+        <!-- Exchange and Network stacked (mobile-friendly) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
             <label class="text-xs muted">Pilih Exchange / Tujuan</label>
             <select id="cryptoExchange" class="input-number mt-2" aria-label="Pilih exchange crypto">
               <option value="">Pilih Tujuan</option>
@@ -46,13 +50,10 @@
             </select>
           </div>
 
-          <!-- Lebar diperlebar supaya muat banyak opsi network -->
-          <div style="width:220px;" id="chainWrap" class="hidden">
+          <div id="chainWrap" class="hidden">
             <label class="text-xs muted">Network (On-chain)</label>
             <select id="chainSelect" class="input-number mt-2" aria-label="Pilih network">
               <option value="">- Pilih Network -</option>
-
-              <!-- EVM-like (share same bep20 address) -->
               <option value="bsc">BSC (BEP20)</option>
               <option value="eth">ETH (ERC20)</option>
               <option value="matic">MATIC (Polygon)</option>
@@ -65,8 +66,6 @@
               <option value="kaia">KAIA</option>
               <option value="avaevm">AVAEVM</option>
               <option value="bep20">BEP20</option>
-
-              <!-- Other chains -->
               <option value="tron">TRON (TRC20)</option>
               <option value="aptos">Aptos (APT)</option>
               <option value="solana">Solana (SOL)</option>
@@ -81,8 +80,10 @@
         <div>
           <label class="text-xs muted">Nominal (USD)</label>
           <div class="mt-2 flex gap-3 items-center">
+            <!-- usdSelect sekarang default kosong sehingga user harus pilih -->
             <select id="usdSelect" aria-label="Nominal USD" class="input-number" style="flex:1;">
-              <!-- opsi diisi dari JS -->
+              <option value="">Pilih nominal (contoh: 1, 5, 10, ...)</option>
+              <!-- pilihan akan diisi oleh JS -->
             </select>
             <button id="cryptoMax" class="max-btn small-chip" title="Set ke MAX">MAX</button>
           </div>
