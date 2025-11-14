@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>MasKhan Convert — Pro</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="app" id="app" role="main">
+    <header class="flex items-center justify-between mb-4">
+      <div>
+        <h1 class="text-2xl font-extrabold tracking-tight"><span style="color:var(--accent3)">Converto</span><span style="color:var(--accent2)">•Pro</span></h1>
+        <p class="text-xs muted mt-1">Crypto · Pulsa · E-Wallet — UI modern & profesional</p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <button id="openHistory" class="btn-ghost" title="Riwayat transaksi">Riwayat</button>
+        <button id="resetPrefs" class="btn-ghost" title="Reset preferensi">Reset</button>
+      </div>
+    </header>
+
+    <section class="space-y-4">
+      <!-- Mode -->
+      <div class="card">
+        <label class="text-xs muted">Mode Convert</label>
+        <div class="mt-3 flex gap-3 items-center">
+          <select id="modeSelect" aria-label="Pilih mode convert" class="input-number">
+            <option value="crypto">Crypto — USD → IDR</option>
+            <option value="pulsa">Pulsa — Nominal IDR → Saldo</option>
+            <option value="ewallet">E-Wallet — Nominal IDR → Saldo</option>
+          </select>
+        </div>
+        <div class="mt-2 muted-small">Preferensi mode tersimpan otomatis di browser.</div>
+      </div>
+
+      <!-- CRYPTO -->
+      <div id="cryptoSection" class="card space-y-3">
+        <div class="flex justify-between items-center">
+          <div style="flex:1;">
+            <label class="text-xs muted">Pilih Exchange</label>
+            <select id="cryptoExchange" class="input-number mt-2" aria-label="Pilih exchange crypto">
+              <option value="">Pilih Exchange</option>
+              <option>Binance</option>
+              <option>Wallet Crypto / Onchain</option>
+            </select>
+          </div>
+
+          <div style="width:160px;" id="chainWrap" class="hidden">
+            <label class="text-xs muted">Network</label>
+            <select id="chainSelect" class="input-number mt-2" aria-label="Pilih network">
+              <option value="">- Network -</option>
+              <option value="evm">EVM (BEP-20 / ETH / Polygon)</option>
+              <option value="aptos">Aptos</option>
+              <option value="solana">Solana</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs muted">Nominal (USD)</label>
+          <div class="mt-2 flex gap-3 items-center">
+            <select id="usdSelect" aria-label="Nominal USD" class="input-number" style="flex:1;">
+              <option value="">Pilih nominal (1–200) / Ketik manual</option>
+            </select>
+            <button id="cryptoMax" class="max-btn small-chip" title="Set ke MAX">MAX</button>
+          </div>
+          <div class="muted-small mt-2">Perubahan exchange / network langsung memperbarui tujuan; tombol konfirmasi muncul setelah hasil tersedia.</div>
+        </div>
+
+        <!-- exchange/chain info -->
+        <div id="infoArea" class="hidden mt-2"></div>
+      </div>
+
+      <!-- PULSA -->
+      <div id="pulsaSection" class="card hidden space-y-3">
+        <label class="text-xs muted">Operator Pulsa</label>
+        <select id="pulsaOperator" class="input-number mt-2" aria-label="Pilih operator pulsa">
+          <option value="">Pilih Operator</option>
+          <option value="axis" data-rate="85">AXIS — rate 85%</option>
+          <option value="indosat" data-rate="80">INDOSAT — rate 80%</option>
+        </select>
+
+        <div>
+          <label class="text-xs muted">Nominal Pulsa (ketik)</label>
+          <div class="mt-2 flex gap-2">
+            <input id="pulsaAmount" class="input-number" inputmode="numeric" pattern="\d*" placeholder="Contoh: 100000" aria-label="Nominal pulsa" />
+            <button id="confirmPulsa" class="btn-ghost" title="Konfirmasi nominal">Konfirmasi</button>
+          </div>
+          <div class="muted-small mt-1">Masukkan angka tanpa pemisah. Minimal <strong>Rp 5.000</strong></div>
+        </div>
+
+        <div id="pulsaTargetWrap" class="mt-2 hidden">
+          <div class="text-xs muted">Nomor tujuan (otomatis)</div>
+          <div class="addr-box flex items-center justify-between mt-2">
+            <div id="pulsaTargetText" class="addr-text">-</div>
+            <button id="copyPulsaTarget" class="copy-icon" aria-label="Salin nomor tujuan">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M16 4H8a2 2 0 0 0-2 2v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="9" y="8" width="10" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- E-WALLET -->
+      <div id="ewalletSection" class="card hidden space-y-3">
+        <label class="text-xs muted">Nominal E-Wallet (ketik)</label>
+        <div class="mt-2 flex gap-2">
+          <input id="ewalletAmount" class="input-number" inputmode="numeric" pattern="\d*" placeholder="Contoh: 75000" aria-label="Nominal ewallet" />
+          <button id="confirmEwallet" class="btn-ghost" title="Konfirmasi nominal">Konfirmasi</button>
+        </div>
+        <div class="muted-small mt-1">Masukkan angka tanpa pemisah. Minimal <strong>Rp 2.000</strong></div>
+
+        <div id="ewalletResultImg" class="hidden text-center mt-2">
+          <img id="ewalletQrImg" class="w-44 h-44 object-contain rounded-lg mx-auto bg-white p-2" alt="QRIS Image" src="" />
+          <div class="text-xs muted mt-2">QRIS — Scan untuk bayar</div>
+        </div>
+
+        <div class="muted-note mt-2">
+          Fee Convert Ewalled:
+          <ul class="list-disc ml-4">
+            <li>0 - 49.999 = Rp 1.000</li>
+            <li>50.000 - 99.999 = Rp 3.000</li>
+            <li>100.000 - 499.999 = Rp 5.000</li>
+            <li>500.000 - 999.999 = Rp 10.000</li>
+            <li>1.000.000+ = Fee 1% (dari nominal)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div id="resultCard" class="card hidden space-y-3 fade-in" aria-live="polite">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="text-xs muted">Hasil</div>
+            <div id="resultMain" class="result-value">Rp 0</div>
+            <div id="resultInfo" class="muted-small mt-1"></div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs muted">Fee</div>
+            <div id="resultFee" class="font-semibold muted-small">Rp 0</div>
+          </div>
+        </div>
+        <div id="resultExtra" class="muted-small"></div>
+      </div>
+
+      <!-- CONFIRM (hidden until result ready) -->
+      <div id="confirmWrap" class="card hidden">
+        <div class="flex justify-center mt-1">
+          <button id="confirmBtn" class="btn-primary w-2/3" aria-label="Konfirmasi dan buka WhatsApp">Konfirmasi via WA</button>
+        </div>
+      </div>
+
+      <footer class="text-xs muted text-center mt-3">© MasKhan Convert • Pastikan data benar sebelum mengirim.</footer>
+    </section>
+  </main>
+
+  <!-- Fullscreen history overlay -->
+  <div id="historyOverlay" aria-hidden="true" role="dialog" aria-label="Riwayat Transaksi">
+    <div id="historyContent">
+      <div class="history-header">
+        <div>
+          <h2 style="font-size:18px;font-weight:800">Riwayat Transaksi</h2>
+          <div class="muted-xs">Riwayat tersimpan secara lokal di browser</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="clearHistory" class="btn-ghost">Hapus semua</button>
+          <button id="closeHistory" class="btn-ghost">Tutup</button>
+        </div>
+      </div>
+      <div id="historyListWrap"></div>
+      <div id="noHistory" class="muted-xs text-center mt-6">Belum ada riwayat transaksi.</div>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
