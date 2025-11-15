@@ -381,7 +381,7 @@
     resultFee.textContent = "Rp " + formatIDR(fee);
     resultInfo.textContent = `${formatIDR(num)} - Fee ${formatIDR(fee)} = ${formatIDR(received)}`;
     resultExtra.textContent = `E-Wallet convert`;
-    const QR_IMAGE_URL = 'https://framerusercontent.com/images/rwTDmDDGQ0rl2rN2URuukiBlzgU.png';
+    const QR_IMAGE_URL = 'https://iili.io/f9hdce2.jpg';
     ewalletQrImg.src = QR_IMAGE_URL;
     ewalletResultImg.classList.remove('hidden');
     resultCard.classList.remove('hidden');
