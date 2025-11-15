@@ -380,7 +380,7 @@
 
   confirmBtn.addEventListener('click', async ()=>{
     const mode = modeSelect.value; if(!mode) return Swal.fire({icon:'error',title:'Pilih mode'});
-    const invoice = 'ZEX' + Date.now().toString(36).toUpperCase().slice(-6);
+    const invoice = 'MAS' + Date.now().toString(36).toUpperCase().slice(-6);
     let historyItem = { invoice, mode, exchange:null, nominal:null, fee:0, result:0, target:null, ts: Date.now() };
     let summaryHtml = `<div style="text-align:left;">Invoice: <strong>${invoice}</strong><br/><br/>`;
 
