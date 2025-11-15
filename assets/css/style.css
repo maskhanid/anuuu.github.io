@@ -1,0 +1,74 @@
+:root{
+  --bg:#061426; --card:#07243a; --muted:#9fb4d6; --accent1:#2dd4bf; --accent2:#60a5fa; --accent3:#f59e0b;
+}
+html,body{height:100%;margin:0}
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+  background:linear-gradient(180deg,#020617 0%,#03132a 100%);
+  color:#e6f0ff;
+  -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;
+}
+.app{width:100%;max-width:520px;margin:18px auto;background:linear-gradient(180deg, rgba(6,20,38,0.95), rgba(4,20,36,0.98));border-radius:16px;padding:18px;box-shadow:0 12px 40px rgba(2,6,23,0.6);max-height:calc(100vh - 36px);overflow:auto;-webkit-overflow-scrolling:touch;}
+.muted{color:var(--muted)}
+.addr-box{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:10px}
+.addr-text{word-break:break-all;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace}
+input, select, button { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+.muted-small{color:rgba(159,180,214,0.85);font-size:12px}
+.card { background: linear-gradient(180deg, rgba(7,32,58,0.6), rgba(6,28,46,0.6)); border:1px solid rgba(17,67,104,0.08); padding:14px; border-radius:12px; }
+.btn-primary { background: linear-gradient(90deg,var(--accent2), #0ea5e9); color:#00121a; font-weight:800; padding:10px 14px; border-radius:10px; box-shadow:0 6px 18px rgba(14,165,233,0.12); border:none; }
+.btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.04); padding:8px 12px; border-radius:10px; color:var(--muted); }
+.small-chip { background: rgba(255,255,255,0.03); padding:6px 8px; border-radius:8px; font-size:13px }
+.result-value { font-weight:900; color: #7fffd4; font-size:1.6rem }
+.fade-in { animation: fadeIn .28s ease both; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px)} to { opacity:1; transform:none } }
+.sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+.input-number {
+  background: linear-gradient(180deg, rgba(6,32,52,0.35), rgba(4,24,40,0.25));
+  border:1px solid rgba(255,255,255,0.03);
+  padding:10px;
+  border-radius:10px;
+  color: #e6f0ff;
+  width:100%;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+.copy-icon { background:transparent; border:none; padding:8px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+.copy-icon svg { width:18px; height:18px; color:#9fb4d6; transition: transform 180ms ease, opacity 180ms ease; }
+.copy-icon.success svg { transform: scale(1.15); opacity:0; }
+.copy-icon.success::after { content: ''; display:inline-block; width:18px; height:18px; background:transparent; mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat center/contain; background-color: #34d399; border-radius:4px; opacity:1; transition:opacity 200ms ease; }
+.chain-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 8px; border-radius:999px; background: rgba(255,255,255,0.02); font-weight:700; color:#cfeefb; }
+.chain-icon { width:18px; height:18px; display:inline-block; }
+.hidden { display:none !important; }
+
+.slide-up { animation: slideUp .34s cubic-bezier(.2,.9,.2,1) both; }
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity:0; }
+  to { transform: translateY(0); opacity:1; }
+}
+
+#historyOverlay {
+  position: fixed;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,6,18,0.9);
+  z-index: 99999;
+  display: none;
+  color: #e6f0ff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#historyContent { max-width:900px; margin:18px auto; padding:18px; }
+.history-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+.history-item { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:10px; margin-bottom:10px; }
+.muted-xs { color:rgba(200,220,255,0.75); font-size:12px; }
+
+@media (max-width:480px){
+  .app{ padding:14px }
+  .result-value{ font-size:1.2rem }
+  .btn-primary{ font-size:15px }
+  #chainWrap { width:100% }
+  .grid { gap:10px; }
+}
